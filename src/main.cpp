@@ -98,8 +98,56 @@ int main() {
           * Both are in between [-1, 1].
           *
           */
-          double steer_value;
-          double throttle_value;
+
+        //  const double v = v_raw * 0.447;// mph to m/s
+         const double steering_angle = j[1]["steering_angle"];
+         const double throttle = j[1]["throttle"];
+
+         const int N = ptsx.size(); // Number of waypoints
+         const double cospsi = cos(-psi);
+         const double sinpsi = sin(-psi);
+         /*
+         * Calculate steeering angle and throttle using MPC.
+         * Both are in between [-1, 1].
+         */
+         const double dt = 0.11;
+         const double Lf = 2.67;
+
+         // Convert to the vehicle coordinate system
+         Eigen::VectorXd x_veh(N);
+         Eigen::VectorXd y_veh(N);
+         for(int i = 0; i < N; i++) {
+           const double dx = ptsx[i] - px;
+           const double dy = ptsy[i] - py;
+           x_veh[i] = dx * cospsi - dy * sinpsi;
+           y_veh[i] = dy * cospsi + dx * sinpsi;
+         }
+
+         auto coeffs = polyfit(x_veh, y_veh, 3); // Fit waypoints
+         const double cte = coeffs[0];
+         const double epsi = -atan(coeffs[1]); //-f'(0)
+
+         // Kinematic model is used to predict vehicle state at the actual
+         // moment of control (current time + delay dt)
+         const double px_act = v * dt;
+         const double py_act = 0;
+         const double psi_act = - v * steering_angle * dt / Lf;
+         const double v_act = v + throttle * dt;
+         const double cte_act = cte + v * sin(epsi) * dt;
+         const double epsi_act = epsi + psi_act;
+         Eigen::VectorXd state(6);
+         state << px_act, py_act, psi_act, v_act, cte_act, epsi_act;
+         vector<double> mpc_results = mpc.Solve(state, coeffs);
+
+         double steer_value = mpc_results[0]/ deg2rad(25); // convert to [-1..1] range
+         double throttle_value = mpc_results[1];
+
+          /*
+          8888888888888 refactor above 88888888888888888
+          */
+
+          // double steer_value;
+          // double throttle_value;
 
           json msgJson;
           // NOTE: Remember to divide by deg2rad(25) before you send the steering value back.
