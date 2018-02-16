@@ -48,9 +48,9 @@ _State vector --> [x,y,ψ,v,cte,eψ]_
 The controls are the actuators that can be adjusted to obtain the desires trajectory. For a car actuators are steering angle, throttle and brakes. Here we consider throttle and brakes as one parameter (as braking is negative acceleration). So there are two cotrol variables the MPC will be predicting. Acceleration **(a)** and steering angle **(delta)**.  
 _Control vector --> [δ,a]_
 #### Update equations
-!(global kinematic model)[https://github.com/askmuhsin/model-predictive-cotroller/blob/master/images/global_kinematic_model.png]  
-!(global kinematic model)[https://github.com/askmuhsin/model-predictive-cotroller/blob/master/images/global_kinematic_model_cte.png]  
-!(global kinematic model)[https://github.com/askmuhsin/model-predictive-cotroller/blob/master/images/global_kinematic_model_epsi.png]  
+![global kinematic model](https://github.com/askmuhsin/model-predictive-cotroller/blob/master/images/global_kinematic_model.png)  
+![global kinematic model](https://github.com/askmuhsin/model-predictive-cotroller/blob/master/images/global_kinematic_model_cte.png)  
+![global kinematic model](https://github.com/askmuhsin/model-predictive-cotroller/blob/master/images/global_kinematic_model_epsi.png)  
 
 ---
 # Result
