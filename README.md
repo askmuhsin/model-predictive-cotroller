@@ -78,6 +78,11 @@ The cost function is an important parameter in MPC as it decides the performance
 Without proper tuning of the cost function the vehicle would behave erratically.   
 ![cost function not tuned](https://github.com/askmuhsin/model-predictive-cotroller/blob/master/images/untuned_mpc.gif)    
 Cost function parameters :   
+| Left-aligned | Center-aligned | Right-aligned |
+| :---         |     ---:       |         :---: |
+| git status   | git status     | git status    |
+| git diff     | git diff       | git diff      |
+
 | Objective | Parameter             | Weight |
 |-----------|-----------            |--------|
 | Minimize  | Cross track error     | 3000   |
