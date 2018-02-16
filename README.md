@@ -75,17 +75,17 @@ This technique has been inspired from the [Udacity discussion forum](https://dis
 
 ## Cost function tuning
 The cost function is an important parameter in MPC as it decides the performance of the vehicle. Several criterions were considered for cost function, each with different weighted importance. _(see MPC.cpp line 39:60)_   
-Without proper tuning of the cost function the vehicle would behave erratically.
+Without proper tuning of the cost function the vehicle would behave erratically.   
 ![cost function not tuned](https://github.com/askmuhsin/model-predictive-cotroller/blob/master/images/untuned_mpc.gif)    
 Cost function parameters :   
-| Objective | Parameter | Weight |
-|-----------|-----------|--------|
-| Minimize  | Cross track error | 3000 |
-| Minimize  | Error in orientation | 2000 |
-| Maintain  | Velocity | 1 |
-| Minimize  | Frequent actuation | 1 |
-| Maintain  | Smooth steering | 500 |
-| Maintain  | Smooth Acceleration | 100 |   
+| Objective | Parameter             | Weight |
+|-----------|-----------            |--------|
+| Minimize  | Cross track error     | 3000   |
+| Minimize  | Error in orientation  | 2000   |
+| Maintain  | Velocity              | 1      |
+| Minimize  | Frequent actuation    | 1      |
+| Maintain  | Smooth steering       | 500    |
+| Maintain  | Smooth Acceleration   | 100    |   
 These values were achieved by trial and error. With the above parameters the vehicle drives as intended.
 
 ---
