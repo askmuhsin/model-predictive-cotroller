@@ -93,7 +93,7 @@ int main() {
           double v = j[1]["speed"];
 
           /*
-          * TODO: Calculate steering angle and throttle using MPC.
+          * Calculate steering angle and throttle using MPC.
           *
           * Both are in between [-1, 1].
           *
@@ -128,6 +128,7 @@ int main() {
           // msgJson["steering_angle"] = steer_value;
           // msgJson["throttle"] = throttle_value;
 
+          //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
           double delay_t = .1;
           const double Lf = 2.67;
 
@@ -150,6 +151,7 @@ int main() {
           // state[3] = v;
           // state[4] = cte;
           // state[5] = epsi;
+          //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
           auto vars = mpc.Solve(state, coeffs);
 
@@ -173,7 +175,7 @@ int main() {
 
           //.. add (x,y) points to list here, points are in reference to the vehicle's coordinate system
           // the points in the simulator are connected by a Green line
-
+          // even index belongs to x, and odd to y
           for (unsigned int i=2; i<vars.size(); i++)
           {
             if(i%2==0)
