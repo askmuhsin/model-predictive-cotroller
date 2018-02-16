@@ -59,15 +59,22 @@ The values chosen in this project is **N=10 and dt=0.1**, thus obtaining a traje
 These values were picked from the Udacity support forums. Different values were later tried out like N=25 & dt=0.05 and some other values. But _N=10 and dt=0.1_ seems to behave the best.  
 
 ## MPC Preprocessing
-The waypoints were preprocessed. The x, y coordinates and orientation angle of the vehicle state were shifted to origin in respect to vehicles perspective. This was done to simplify the calculations. (see main.cpp line 101:109)
+The waypoints were preprocessed. The x, y coordinates and orientation angle of the vehicle state were shifted to origin in respect to vehicles perspective. This was done to simplify the calculations. _(see main.cpp line 101:109)_
 
 ## Model Predictive Control with Latency
-The student implements Model Predictive Control that handles a 100 millisecond latency. Student provides details on how they deal with latency.
-
+The simulator has a 100ms latency. This is to emulate what a real car would have between transmitting control parameters and the actual actuation. Inorder to account for this delay the state values were shifted one step. Since the values were preprocessed, to be from the perspective of the car (as origin), the delay logic was implemented as follows :   
+* x = 0 + v*cos(0)*dt
+* y = 0 + v*sin(0)*dt
+* psi = 0 - v/Lf*dt
+* v = v + a*dt
+* cte = cte + v*sin(epsi)*dt
+* epsi = epsi - v*delta/Lf*dt   
+_(see main.cpp 130:139)_  
+This technique has been inspired from the [Udacity discussion forum](https://discussions.udacity.com/t/how-to-incorporate-latency-into-the-model/257391/42). Note: the forum is only accessible by people who are already enrolled in Term 2 of CarND.
 
 ---
 # Result
 Code compiles without errors with `cmake` and `make`.
-The vehicle drives around the track without leaving the drivable portion. [Video link](https://youtu.be/tY872fwnqFE).
-![Result]()
+The vehicle drives around the track without leaving the drivable portion. [Video link](https://youtu.be/tY872fwnqFE).  
+![Result](https://github.com/askmuhsin/model-predictive-cotroller/blob/master/images/final.gif)
 
