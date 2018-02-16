@@ -1,5 +1,5 @@
 # Model Predictive Control (MPC)
-MPC is an advanced process control method that makes use of the dynamic model of the system to optimize future control paramters. In this case the MPC is used to control the *throttle value*, and *steering angle* of a self-driving car. The model takes advantage of the Kinematic vehicle model for achieving this task.
+MPC is an advanced process control method that makes use of the dynamic model of the system to optimize future control paramters. In this case the MPC is used to control the *throttle value*, and *steering angle* of a self-driving car. The MPC controller takes advantage of the Kinematic vehicle model for achieving this task.
 
 ---
 ## Dependencies
@@ -36,3 +36,23 @@ MPC is an advanced process control method that makes use of the dynamic model of
 2. Make a build directory: `mkdir build && cd build`
 3. Compile: `cmake .. && make`
 4. Run it: `./mpc`.
+
+---
+# MPC implementation
+## The Model
+The model used here is a Kinematic model (compared to a dynamic model, kinematic model is simpler because it ignores parameters like gravity, tire forces and mass). Kinematic model is chosen for its simplicity and effectiveness.  
+#### States
+The states are vehicles position in **x** and **y** coordinate, orientation/heading angle **(psi)**, velocity of the vehicle **(v)**, cross-track error **(cte)** ie. the lateral distance of the vehicle from the planned trajectory, and orrientation error **(e_psi)** ie. the difference of actual vehicle orientation and trajectory orientation.  
+_State vector --> [x,y,ψ,v,cte,eψ]_
+#### Controls
+The controls are the actuators that can be adjusted to obtain the desires trajectory. For a car actuators are steering angle, throttle and brakes. Here we consider throttle and brakes as one parameter (as braking is negative acceleration). So there are two cotrol variables the MPC will be predicting. Acceleration **(a)** and steering angle **(delta)**.  
+_Control vector --> [δ,a]_
+#### Update equations
+!(global kinematic model)[https://github.com/askmuhsin/model-predictive-cotroller/blob/master/images/global_kinematic_model.png]  
+!(global kinematic model)[https://github.com/askmuhsin/model-predictive-cotroller/blob/master/images/global_kinematic_model_cte.png]  
+!(global kinematic model)[https://github.com/askmuhsin/model-predictive-cotroller/blob/master/images/global_kinematic_model_epsi.png]  
+
+---
+# Result
+Code compiles without errors with `cmake` and `make`.
+The vehicle drives around the track without leaving the drivable portion.
