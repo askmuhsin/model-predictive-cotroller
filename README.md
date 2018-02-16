@@ -2,8 +2,14 @@
 MPC is an advanced process control method that makes use of the dynamic model of the system to optimize future control paramters. In this case the MPC is used to control the *throttle value*, and *steering angle* of a self-driving car. The MPC controller takes advantage of the Kinematic vehicle model for achieving this task.
 
 ---
-## Dependencies
+## Basic Build Instructions
+1. Clone this repo.
+2. Make a build directory: `mkdir build && cd build`
+3. Compile: `cmake .. && make`
+4. Run it: `./mpc`.
 
+---
+## Dependencies
 * cmake >= 3.5
  * All OSes: [click here for installation instructions](https://cmake.org/install/)
 * make >= 4.1(mac, linux), 3.81(Windows)
@@ -28,14 +34,6 @@ MPC is an advanced process control method that makes use of the dynamic model of
 * [Eigen](http://eigen.tuxfamily.org/index.php?title=Main_Page). This is already part of the repo so you shouldn't have to worry about it.
 * Simulator. You can download these from the [releases tab](https://github.com/udacity/self-driving-car-sim/releases).
 * Not a dependency but read the [DATA.md](./DATA.md) for a description of the data sent back from the simulator.
-
----
-## Basic Build Instructions
-
-1. Clone this repo.
-2. Make a build directory: `mkdir build && cd build`
-3. Compile: `cmake .. && make`
-4. Run it: `./mpc`.
 
 ---
 # MPC implementation
