@@ -62,15 +62,31 @@ These values were picked from the Udacity support forums. Different values were 
 The waypoints were preprocessed. The x, y coordinates and orientation angle of the vehicle state were shifted to origin in respect to vehicles perspective. This was done to simplify the calculations. _(see main.cpp line 101:109)_
 
 ## Model Predictive Control with Latency
-The simulator has a 100ms latency. This is to emulate what a real car would have between transmitting control parameters and the actual actuation. Inorder to account for this delay the state values were shifted one step. Since the values were preprocessed, to be from the perspective of the car (as origin), the delay logic was implemented as follows :   
+The simulator has a 100ms latency. This is to emulate what a real car would have between transmitting control parameters and the actual actuation. Inorder to account for this delay the state values were shifted one step ie. the initial position into 0.1s was calculated and passed to MPC. Since the values were preprocessed, to be from the perspective of the car (as origin), the delay logic was implemented as follows :   
 * x = 0 + v*cos(0)*dt
 * y = 0 + v*sin(0)*dt
 * psi = 0 - v/Lf*dt
 * v = v + a*dt
 * cte = cte + v*sin(epsi)*dt
 * epsi = epsi - v*delta/Lf*dt   
+
 _(see main.cpp 130:139)_  
 This technique has been inspired from the [Udacity discussion forum](https://discussions.udacity.com/t/how-to-incorporate-latency-into-the-model/257391/42). Note: the forum is only accessible by people who are already enrolled in Term 2 of CarND.
+
+## Cost function tuning
+The cost function is an important parameter in MPC as it decides the performance of the vehicle. Several criterions were considered for cost function, each with different weighted importance. _(see MPC.cpp line 39:60)_   
+Without proper tuning of the cost function the vehicle would behave erratically.
+![cost function not tuned](https://github.com/askmuhsin/model-predictive-cotroller/blob/master/images/untuned_mpc.gif)    
+Cost function parameters
+| Objective | Parameter | Weight |
+|-----------|-----------|--------|
+| Minimize  | Cross track error | 3000 |
+| Minimize  | Error in orientation | 2000 |
+| Maintain  | Velocity | 1 |
+| Minimize  | Frequent actuation | 1 |
+| Maintain  | Smooth steering | 500 |
+| Maintain  | Smooth Acceleration | 100 |
+These values were achieved by trial and error. With the above parameters the vehicle drives as intended.
 
 ---
 # Result
