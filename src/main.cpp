@@ -123,35 +123,20 @@ int main() {
           double steer_value = j[1]["steering_angle"];
           double throttle_value = j[1]["throttle"];
 
-          // NOTE: Remember to divide by deg2rad(25) before you send the steering value back.
-          // Otherwise the values will be in between [-deg2rad(25), deg2rad(25] instead of [-1, 1].
-          // msgJson["steering_angle"] = steer_value;
-          // msgJson["throttle"] = throttle_value;
-
-          //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-          double delay_t = .1;
+          const double dt = 0.1;
           const double Lf = 2.67;
 
           //factor in delay
-          double delay_x = v*delay_t;
+          double delay_x = v*dt;
           double delay_y = 0;
-          double delay_psi = -v*steer_value / Lf * delay_t;
-          double delay_v = v + throttle_value*delay_t;
-          double delay_cte = cte + v*sin(epsi)*delay_t;
-          double delay_epsi = epsi-v*steer_value /Lf * delay_t;
-
+          double delay_psi = -v*steer_value / Lf * dt;
+          double delay_v = v + throttle_value*dt;
+          double delay_cte = cte + v*sin(epsi)*dt;
+          double delay_epsi = epsi-v*steer_value /Lf * dt;
 
           Eigen::VectorXd state(6);
+          state.fill(0.0);
           state << delay_x, delay_y, delay_psi, delay_v, delay_cte, delay_epsi;
-
-
-          //
-          // Eigen::VectorXd state(6);
-          // state.fill(0.0);
-          // state[3] = v;
-          // state[4] = cte;
-          // state[5] = epsi;
-          //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
           auto vars = mpc.Solve(state, coeffs);
 
