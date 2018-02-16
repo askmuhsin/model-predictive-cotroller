@@ -52,7 +52,22 @@ _Control vector --> [δ,a]_
 ![global kinematic model](https://github.com/askmuhsin/model-predictive-cotroller/blob/master/images/global_kinematic_model_cte.png)  
 ![global kinematic model](https://github.com/askmuhsin/model-predictive-cotroller/blob/master/images/global_kinematic_model_epsi.png)  
 
+
+## Timestep Length and Elapsed Duration (N & dt)
+Two of the most important hyperparameters in tuning the MPC are: **N** (timestep length) and **dt** (elapsed duration between timesteps) values. The objective is to choose a value so that the Cross track error is optimal (zero) while not being computationally costly.  
+The values chosen in this project is **N=10 and dt=0.1**, thus obtaining a trajectory duration of 1s. _(T=N*dt)_   
+These values were picked from the Udacity support forums. Different values were later tried out like N=25 & dt=0.05 and some other values. But _N=10 and dt=0.1_ seems to behave the best.  
+
+## MPC Preprocessing
+The waypoints were preprocessed. The x, y coordinates and orientation angle of the vehicle state were shifted to origin in respect to vehicles perspective. This was done to simplify the calculations. (see main.cpp line 101:109)
+
+## Model Predictive Control with Latency
+The student implements Model Predictive Control that handles a 100 millisecond latency. Student provides details on how they deal with latency.
+
+
 ---
 # Result
 Code compiles without errors with `cmake` and `make`.
-The vehicle drives around the track without leaving the drivable portion.
+The vehicle drives around the track without leaving the drivable portion. [Video link](https://youtu.be/tY872fwnqFE).
+![Result]()
+
