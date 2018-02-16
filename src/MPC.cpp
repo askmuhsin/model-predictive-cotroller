@@ -40,8 +40,8 @@ class FG_eval {
     // CTE, eψ, velocity <-- maintain
     for (unsigned int t=0; t<N; t++)
     {
-      fg[0] += CppAD::pow(vars[cte_start+t]-ref_cte, 2) +
-                CppAD::pow(vars[epsi_start+t]-ref_epsi, 2) +
+      fg[0] += 3000*CppAD::pow(vars[cte_start+t]-ref_cte, 2) +
+                2000*CppAD::pow(vars[epsi_start+t]-ref_epsi, 2) +
                 CppAD::pow(vars[v_start+t]-ref_v, 2);
     }
 
@@ -56,7 +56,7 @@ class FG_eval {
     for (unsigned int t=0; t<N-2; t++)
     {
       fg[0] += 500 * CppAD::pow(vars[delta_start+t+1]-vars[delta_start+t], 2)+
-                CppAD::pow(vars[a_start+t+1]-vars[a_start+t], 2);
+                100 * CppAD::pow(vars[a_start+t+1]-vars[a_start+t], 2);
     }
 
     // position of all the other values.
@@ -216,8 +216,8 @@ vector<double> MPC::Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs) {
   ok &= solution.status == CppAD::ipopt::solve_result<Dvector>::success;
 
   // Cost
-  auto cost = solution.obj_value;
-  std::cout << "Cost " << cost << std::endl;
+  // auto cost = solution.obj_value;
+  // std::cout << "Cost " << cost << std::endl;
 
   // TODO: Return the first actuator values. The variables can be accessed with
   // `solution.x[i]`.
